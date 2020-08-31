@@ -1,4 +1,4 @@
-export class Entity {
+export class EntityType {
     constructor(species, lifeCycle, characteristics, abilities) {
         const errorText = `Can not create Entity: %field field must be type of %expectedType, but got %type`
 
@@ -18,7 +18,7 @@ export class Entity {
                     .replace('%type', typeof lifeCycle)
             )
         }
-        if (typeof characteristics !== object) {
+        if (typeof characteristics !== 'object') {
             throw new Error(
                 errorText
                     .replace('%field', 'characteristics')
@@ -26,7 +26,7 @@ export class Entity {
                     .replace('%type', typeof characteristics)
             )
         }
-        if (typeof abilities !== object) {
+        if (typeof abilities !== 'object') {
             throw new Error(
                 errorText
                     .replace('%field', 'abilities')
@@ -39,9 +39,31 @@ export class Entity {
         this.abilities = abilities
         this.lifeCycle = lifeCycle
         this.characteristics = characteristics
+
+        return this
     }
     create() {
         this.creationDate = new Date()
         this.lifeCycle()
+
+        return this
+    }
+}
+
+export class EntityOf {
+    constructor(extendsEntity, lifeCycle, characteristics, abilities) {
+        const extendedLifeCycle = extendsEntity.lifeCycle.bind(this)
+
+        for (const property in extendsEntity) {
+            this[property] = extendsEntity[property]
+        }
+        this.lifeCycle = () => {
+            extendedLifeCycle()
+            lifeCycle()
+        }
+        this.characteristics = Object.assign(this.characteristics, characteristics)
+        this.abilities = Object.assign(this.abilities, abilities)
+        
+        return this
     }
 }

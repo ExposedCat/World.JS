@@ -1,7 +1,7 @@
 # World.JS
 Are we living in simulation? What if our world written in JavaScript ? 😆
 
-To run World, import `Universe` class from `universe.mjs`, one of initialization types from `initTypes.mjs` and make what do u want 😜
+To run World, import `Universe` class from `universe.mjs`, one of initialization types from `initTypes.mjs` and make anything you want 😜
 Exmaple `index.js`:
 ```js
 import { Universe } from './universe.mjs'
